@@ -1,0 +1,9 @@
+{
+  "name": "gtc-assistant",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GTC Assistant — AI prototype for monitoring and analysing WTO trade concerns",
+  "type": "module",
+  "scripts": { "dev": "netlify dev" },
+  "engines": { "node": ">=18" }
+}

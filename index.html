@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GTC Assistant — Trade Concerns Intelligence</title>
+<meta name="description" content="Prototype AI assistant for analysing trade concerns: plain-language summaries, HS product codes, trade flows, trends and early warning.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip" href="#view">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5.5" rx="8" ry="2.5"/><path d="M4 5.5v13c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5v-13M4 12c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.6 2.6 0 0 1 5 1c0 1.8-2.5 2.2-2.5 3.8M12 17.2v.1"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6M4 20h16"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V8M6 14l6-6 6 6M4 4h16"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2"/><path d="M6 14h12v7H6z"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.1"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <aside class="side" id="side" aria-label="Main navigation">
+    <a class="brand" href="#/">
+      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+      <span><b>GTC Assistant</b><span>Trade concerns intelligence</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#/" data-nav="home"><svg><use href="#i-home"/></svg>Home</a>
+      <a href="#/concerns" data-nav="concerns"><svg><use href="#i-list"/></svg>Browse concerns</a>
+      <a href="#/ask" data-nav="ask"><svg><use href="#i-chat"/></svg>Ask a question</a>
+      <div class="nav-label">Tools</div>
+      <a href="#/analyse" data-nav="analyse"><svg><use href="#i-doc"/></svg>Explain a statement</a>
+      <a href="#/hs" data-nav="hs"><svg><use href="#i-tag"/></svg>Find a product code</a>
+      <a href="#/flows" data-nav="flows"><svg><use href="#i-globe"/></svg>Trade flows</a>
+      <a href="#/trends" data-nav="trends"><svg><use href="#i-trend"/></svg>Trends &amp; early warning</a>
+      <div class="nav-label">Manage</div>
+      <a href="#/data" data-nav="data"><svg><use href="#i-db"/></svg>Data &amp; review</a>
+      <a href="#/help" data-nav="help"><svg><use href="#i-help"/></svg>Help &amp; guide</a>
+    </nav>
+    <div class="side-foot">
+      <div id="dataset-label">Loading data…</div>
+      <div style="margin-top:8px">Independent research prototype. Not an official WTO product.</div>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="ghost menu-btn" id="menu-btn" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
+      <form class="search" id="global-search" role="search">
+        <svg><use href="#i-search"/></svg>
+        <input type="search" id="global-q" placeholder="Search concerns — try “labelling”, “Korea”, “cheese”…" aria-label="Search trade concerns">
+      </form>
+      <span class="spacer"></span>
+      <span class="status-pill hide-sm" id="ai-status" title="Which AI features are active"><span class="dot"></span>Checking AI…</span>
+      <button class="ghost" id="theme-btn" aria-label="Switch light or dark mode"><svg><use href="#i-moon"/></svg></button>
+    </header>
+    <main class="view" id="view" tabindex="-1">
+      <div class="empty"><span class="spinner"></span><p style="margin-top:12px">Loading the trade concerns and HS nomenclature…</p></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/vendor/papaparse.min.js"></script>
+<script src="js/vendor/chart.umd.min.js"></script>
+<script src="js/nlp.js"></script>
+<script src="js/core.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/views-main.js"></script>
+<script src="js/views-tools.js"></script>
+<script src="js/views-insight.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
